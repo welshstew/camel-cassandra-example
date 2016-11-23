@@ -54,6 +54,8 @@ public class CamelCassandraRouteBuilder extends RouteBuilder {
                     session.execute("INSERT INTO simplex.songs (id, title, album, artist, tags) VALUES (now(), 'Intolerance', 'Undertow', 'Tool',  {'1993', 'Alternative Metal'});");
                     session.execute("INSERT INTO simplex.songs (id, title, album, artist, tags) VALUES (now(), 'Prison Sex', 'Undertow', 'Tool',  {'1993', 'Alternative Metal'});");
                     session.execute("INSERT INTO simplex.songs (id, title, album, artist, tags) VALUES (now(), 'Sober', 'Undertow', 'Tool',  {'1993', 'Alternative Metal'});");
+                    session.close();
+                    cluster.close();
                 });
 
         from ("timer://first?fixedRate=true&period=1000&repeatCount=1").to("direct:populateData").to("controlbus:route?routeId=selecta&action=start");
